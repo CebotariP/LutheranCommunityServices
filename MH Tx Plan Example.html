@@ -29,6 +29,7 @@ window.setTimeout("startIdleLogout()", 10000);
     <link href="./MH Tx Plan Example_files/kendo.default.min.css" rel="stylesheet">
     <link href="./MH Tx Plan Example_files/kendo.dataviz.min.css" rel="stylesheet">
     <link href="./MH Tx Plan Example_files/kendo.dataviz.default.min.css" rel="stylesheet">
+    <link href="./MH Tx Plan Example_files/style.css" rel="stylesheet">
     <script type="text/javascript" src="./MH Tx Plan Example_files/kendo.all.min.js.download"></script>
 	<style type="text/css">
 		body {
@@ -154,12 +155,12 @@ window.setTimeout("startIdleLogout()", 10000);
           </td>
         </tr>
         <tr>
-          <td bgcolor="#EEEEEE" nowrap="nowrap"><b>Revised Time In:</b></td>
+          <td bgcolor="#EEEEEE" nowrap="nowrap" id="revTimeIn"><b>Revised Time In:</b></td>
           <td nowrap="nowrap">&nbsp;</td>
-          <td bgcolor="#EEEEEE" nowrap="nowrap"><b>Revised Time Out:</b></td>
+          <td bgcolor="#EEEEEE" nowrap="nowrap" id="revTimeOut"><b>Revised Time Out:</b></td>
           <td nowrap="nowrap">&nbsp;</td>
-          <td bgcolor="#EEEEEE" nowrap="nowrap"><b>Duration:</b></td>
-          <td nowrap="nowrap">37&nbsp;</td>
+          <td bgcolor="#EEEEEE" nowrap="nowrap" id="duration"><b>Duration:</b></td>
+          <td nowrap="nowrap" id="durationTime"><div class="popup" onmouseenter="timeError()" onmouseleave="timeError()">37&nbsp;<span class="popuptext" id="myPopup">Incorrect Duration</span></div></td>
         </tr>
       
         <tr>
@@ -459,6 +460,7 @@ Frequency: once per week. Duration: 60 minutes.</td></tr><tr><td class="Answer">
 
 <script type="text/javascript" src="./MH Tx Plan Example_files/tooltip.js.download"></script>
 
+<script type="text/javascript" src="./MH Tx Plan Example_files/script.js"></script>
 
 
 <script language="javascript" type="text/javascript">
