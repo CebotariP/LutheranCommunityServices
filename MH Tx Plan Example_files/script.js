@@ -40,12 +40,13 @@ function errorColor() {
     // red text
 if(durationMinutes == durationTime || (durationTime == 0 && (revTimeIn == "Invalid Date" || revTimeOut == "Invalid Date"))) {
     durationTimeElement.style.color = "black";
+    popup.classList.toggle("hide");
 } else if (revTimeIn == "Invalid Date" || revTimeOut == "Invalid Date" || durationMinutes !== durationTime) {
     durationTimeElement.style.color = "red";
 }
 
 // make popup same as other popups
-// change error message to invalid date
+// DONE make popup only show when it's incorrect
 // are there going to be other types of forms where no edits will be currently made and errors need to be checked?
 // other possible solution: automatically calculating time duration
 // test case: if revtimein = 3:00 PM, and revtimeout = 3:30 pm, duration being 30 is correct and 32 is incorrect
