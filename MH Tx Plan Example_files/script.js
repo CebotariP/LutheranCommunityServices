@@ -24,38 +24,20 @@ var popup = document.getElementById("myPopup");
 function timeError() {
     popup.classList.toggle("show");
 }
-console.log("duration:")
-console.log(durationTime);
 
-//compare calculated duration with user input
+//compare calculated duration with user input while they're putting in input
 function errorColor() {
-    if ((!isNaN(durationTime) && Math.abs(durationMinutes - durationTime) < 1) || 
-        (durationTime === 0 && revTimeInElement === '' && revTimeOutElement === '')) {
+    if(durationMinutes == durationTime || (durationTime == 0 && (revTimeIn == "Invalid Date" || revTimeOut == "Invalid Date"))) {
         durationTimeElement.style.color = "black";
-    } else {
+    } else if (revTimeIn == "Invalid Date" || revTimeOut == "Invalid Date" || durationMinutes !== durationTime) {
         durationTimeElement.style.color = "red";
-    }
+    } 
 }
 
-//(durationMinutes.value == undefined && durationTime == undefined) || 
-// else if((durationMinutes.value == undefined && durationTime.value == undefined) && durationTime == 0) {
-//     document.getElementById("durationTime").style.color="black"
-// }
-
-console.log(Math.abs(durationMinutes-durationTime));
-console.log(revTimeIn == "Invalid Date")
-
-    // if ((Math.abs(durationMinutes - durationTime) < 1) || 
-    //     (durationTime === 0 && revTimeInElement === '' && revTimeOutElement === '')) {
-    //     durationTimeElement.style.color = "black";
-    // } else if (durationTime !==  Math.abs(durationMinutes - durationTime) || durationTime !== NaN) {
-    //     durationTimeElement.style.color = "red";
-    // }
-    //--------------//
-    // if there's a valid date in revtimein and revtimeout AND durationMinutes = durationTime
-        // black text
-    // else if there's an invalid date in retimein OR revtimeout OR duratoinMinutes != durationTime
-        // red text
+// if there's a valid date in revtimein and revtimeout AND durationMinutes = durationTime
+    // black text
+// else if there's an invalid date in retimein OR revtimeout OR duratoinMinutes != durationTime
+    // red text
 if(durationMinutes == durationTime || (durationTime == 0 && (revTimeIn == "Invalid Date" || revTimeOut == "Invalid Date"))) {
     durationTimeElement.style.color = "black";
 } else if (revTimeIn == "Invalid Date" || revTimeOut == "Invalid Date" || durationMinutes !== durationTime) {
