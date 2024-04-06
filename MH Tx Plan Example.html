@@ -178,7 +178,7 @@
                                                 <td nowrap="nowrap">&nbsp;</td>
                                                 <td bgcolor="#EEEEEE" nowrap="nowrap" id="duration"><b>Duration:</b></td>
                                                 <td nowrap="nowrap" id="durationTime">
-                                                    <div class="popup" onmouseenter="timeError()" onmouseleave="timeError()" onchange="errorColor()">91&nbsp;
+                                                    <div class="popup" onmouseenter="timeError()" onmouseleave="timeError()" onchange="errorColor()">37&nbsp;
                                                         <span class="popuptext" id="myPopup">Incorrect duration or invalid dates</span></div>
                                                 </td>
                                             </tr>
@@ -317,9 +317,18 @@
 
 
                                                 <td bgcolor="#EEEEEE" nowrap="nowrap"><b>Supervising Physician:</b></td>
-                                                <td nowrap="nowrap"><a href="https://www.cbh3.crediblebh.com/employee/emp_view.asp?emp_id=4999">Shelly Hahn</a>
-                                                    <img src="./MH Tx Plan Example_files/info.gif" title="Use As Rendering: True ">
+                                                <td nowrap="nowrap" type="text"  id="supPhyInput" placeholder="Keep this field empty.">
+                                                    <div class="popup" onmouseenter="fieldError()" onmouseleave="fieldError()" onchange="checkInput()">
+                                                        <a href="https://www.cbh3.crediblebh.com/employee/emp_view.asp?emp_id=4999">Shelly Hahn</a>
+                                                        <span class="popuptext" id="fieldPopUp">Field must be empty</span></div>
+                                                        <img src="./MH Tx Plan Example_files/info.gif" title="Use As Rendering: True ">
+                                                    </div>
                                                 </td>
+
+                                                <!-- <td nowrap="nowrap" id="durationTime">
+                                                    <div class="popup" onmouseenter="timeError()" onmouseleave="timeError()" onchange="errorColor()">37&nbsp;
+                                                        <span class="popuptext" id="myPopup">Incorrect duration or invalid dates</span></div>
+                                                </td> -->
 
 
                                             </tr>
