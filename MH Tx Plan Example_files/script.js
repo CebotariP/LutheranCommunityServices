@@ -19,15 +19,10 @@ var revTimeOut = new Date(today.getFullYear(), today.getMonth(), today.getDate()
 var durationMilliseconds = revTimeOut - revTimeIn;
 var durationMinutes = durationMilliseconds / (1000 * 60);
 var popup = document.getElementById("myPopup");
-var fieldPopup = document.getElementById("fieldPopUp");
 
 // function popup
 function timeError() {
     popup.classList.toggle("show");
-}
-
-function fieldError(){
-    fieldPopup.classList.toggle("show");
 }
 
 //compare calculated duration with user input while they're putting in input
@@ -57,6 +52,11 @@ if (durationMinutes == durationTime || (durationTime == 0 && (isNaN(revTimeIn.ge
 // other possible solution: automatically calculating time duration
 
 //--------------- checking input for supervising physician ------------------// 
+var fieldPopup = document.getElementById("fieldPopUp");
+
+function fieldError(){
+    fieldPopup.classList.toggle("show");
+}
 
  // Get the input field element
  var inputField = document.getElementById("supPhyInput");
@@ -72,6 +72,7 @@ if (durationMinutes == durationTime || (durationTime == 0 && (isNaN(revTimeIn.ge
         linkElement.removeAttribute("href");
     } else {
         inputField.style.color = ""; // Reset text color if empty
+        fieldPopup.classList.toggle("hide");
     }
 }
 
@@ -82,5 +83,59 @@ if (inputValue !== "") {
     linkElement.removeAttribute("href");
 } else {
     inputField.style.color = ""; 
-    popup.classList.toggle("hide");
+    fieldPopup.classList.toggle("hide");
 }
+
+//--------------- validating treatment plan target date ------------------// 
+
+var treatmentPopup = document.getElementById("treatmentPopup");
+var originalDateElement = document.getElementById("dateOfVisit");
+var originalDate = originalDateElement.innerText.trim();
+var checkDateElement = document.getElementById("treatPlanTargetDate");
+var checkDate = checkDateElement.innerText.trim();
+
+function formatDate(dateString) {
+    // Split the date string into day, month, and year
+    var parts = dateString.split("/");
+    var day = parseInt(parts[1]);
+    var month = parseInt(parts[0]);
+    var year = parseInt(parts[2]);
+
+    // Return the formatted date in the format mm/dd/yyyy
+    return month.toString().padStart(2, '0') + '/' + day.toString().padStart(2, '0') + '/' + year;
+}
+
+originalDate = formatDate(originalDate);
+checkDate = formatDate(checkDate);
+
+function treatmentError(){
+    treatmentPopup.classList.toggle("show");
+}
+
+function checkTreatmentDate(){
+    if (originalDate !== checkDate) {
+        checkDateElement.style.color = "red";
+    } else {
+       checkDateElement.style.color = "black";
+    }
+}
+
+// checking without live input 
+console.log(checkDate)
+
+if (originalDate === checkDate) {
+    checkDateElement.style.color = "red";
+} else {
+   checkDateElement.style.color = "black";
+   treatmentPopup.classList.toggle("hide");
+}
+
+// Questions:
+// - is this a user input or automatically filled in by the computer?
+// - are there times when this isn't 90 days from the date of service?
+// - since the data can't be read in this instance, the date: is NaN/NaN/NaN, no true testing can be accomplished here
+
+//--------------- missing target date ------------------// 
+
+// Questions:
+// - is this user input or automatically filled in by the computer?

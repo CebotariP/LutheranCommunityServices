@@ -166,7 +166,7 @@
                                                 <td nowrap="nowrap">3:41 PM&nbsp;</td>
                                                 <td bgcolor="#EEEEEE" nowrap="nowrap"><b>Time Out:</b></td>
                                                 <td nowrap="nowrap">4:18 PM&nbsp;</td>
-                                                <td bgcolor="#EEEEEE" nowrap="nowrap"><b>Date:</b></td>
+                                                <td bgcolor="#EEEEEE" nowrap="nowrap" id="dateOfVisit"><b>Date:</b></td>
                                                 <td nowrap="nowrap">3/12/2024&nbsp;
 
                                                 </td>
@@ -324,12 +324,6 @@
                                                         <img src="./MH Tx Plan Example_files/info.gif" title="Use As Rendering: True ">
                                                     </div>
                                                 </td>
-
-                                                <!-- <td nowrap="nowrap" id="durationTime">
-                                                    <div class="popup" onmouseenter="timeError()" onmouseleave="timeError()" onchange="errorColor()">37&nbsp;
-                                                        <span class="popuptext" id="myPopup">Incorrect duration or invalid dates</span></div>
-                                                </td> -->
-
 
                                             </tr>
 
@@ -499,8 +493,15 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td><img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"><img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"></td>
-                                                                <td style="vertical-align:top;"><b>Treatment Plan Target Date:</b>&nbsp;&nbsp;<span class="Answer">03/12/2024</span>&nbsp;</td>
+                                                                <td style="vertical-align:top;"><b>Treatment Plan Target Date:</b>&nbsp;&nbsp;
+                                                                    <span id="treatPlanTargetDate" class="Answer">
+                                                                        <div class="popup" onmouseenter="treatmentError()" onmouseleave="treatmentError()" onchange="checkTreatmentDate()">
+                                                                            03/12/2024
+                                                                            <span class="popuptext" id="treatmentPopup">Cannot match date of service</span>
+                                                                        </div>
+                                                                    </span>&nbsp;</td>
                                                             </tr>
+
                                                             <tr>
                                                                 <td><img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"><img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"></td>
                                                                 <td style="vertical-align:top;"><b><b>Provide short information or explanation here.  <i> Use another service type if you need to document an intervention </i></b>:</b>&nbsp;&nbsp;<span class="Answer"></span>&nbsp;</td>
