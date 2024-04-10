@@ -86,13 +86,20 @@ if (inputValue !== "") {
     fieldPopup.classList.toggle("hide");
 }
 
+
+
 //--------------- validating treatment plan target date ------------------// 
 
 var treatmentPopup = document.getElementById("treatmentPopup");
-var originalDateElement = document.getElementById("dateOfVisit");
-var originalDate = originalDateElement.innerText.trim();
 var checkDateElement = document.getElementById("treatPlanTargetDate");
 var checkDate = checkDateElement.innerText.trim();
+
+
+var dateOfVisitCell = document.getElementById("dateOfVisit").nextElementSibling;
+var originalDate = dateOfVisitCell.textContent.trim();
+
+console.log("Original Date:", originalDate);
+
 
 function formatDate(dateString) {
     // Split the date string into day, month, and year
@@ -121,7 +128,7 @@ function checkTreatmentDate(){
 }
 
 // checking without live input 
-console.log(checkDate)
+console.log(originalDate)
 
 if (originalDate === checkDate) {
     checkDateElement.style.color = "red";
@@ -133,9 +140,23 @@ if (originalDate === checkDate) {
 // Questions:
 // - is this a user input or automatically filled in by the computer?
 // - are there times when this isn't 90 days from the date of service?
-// - since the data can't be read in this instance, the date: is NaN/NaN/NaN, no true testing can be accomplished here
 
 //--------------- missing target date ------------------// 
 
+var targetDate = document.getElementById("targetDate");
+var targetDatePopup = document.getElementById("");
+
+function targetDateError(){
+    targetDatePopUp.classList.toggle("show");
+}
+
+function checkTargetDateInput(){
+    if (targetDate === "") {
+        targetDateError();
+    } else {
+        inputField.style.color = ""; // Reset text color if empty
+        fieldPopup.classList.toggle("hide");
+    }
+}
 // Questions:
 // - is this user input or automatically filled in by the computer?
