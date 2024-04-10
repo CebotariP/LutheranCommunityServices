@@ -86,8 +86,6 @@ if (inputValue !== "") {
     fieldPopup.classList.toggle("hide");
 }
 
-
-
 //--------------- validating treatment plan target date ------------------// 
 
 var treatmentPopup = document.getElementById("treatmentPopup");
@@ -97,9 +95,6 @@ var checkDate = checkDateElement.innerText.trim();
 
 var dateOfVisitCell = document.getElementById("dateOfVisit").nextElementSibling;
 var originalDate = dateOfVisitCell.textContent.trim();
-
-console.log("Original Date:", originalDate);
-
 
 function formatDate(dateString) {
     // Split the date string into day, month, and year
@@ -127,9 +122,6 @@ function checkTreatmentDate(){
     }
 }
 
-// checking without live input 
-console.log(originalDate)
-
 if (originalDate === checkDate) {
     checkDateElement.style.color = "red";
 } else {
@@ -143,19 +135,74 @@ if (originalDate === checkDate) {
 
 //--------------- missing target date ------------------// 
 
-var targetDate = document.getElementById("targetDate");
-var targetDatePopup = document.getElementById("");
+var targetDatePopUp = document.getElementById("targetDatePopUp");
 
 function targetDateError(){
     targetDatePopUp.classList.toggle("show");
 }
 
-function checkTargetDateInput(){
-    if (targetDate === "") {
+function checkTargetDateInput() {
+    var targetDateContent = document.getElementById("targetDateContent");
+    var popupContainer = document.getElementById("popup-container");
+
+    if (targetDateContent.textContent.trim() === "") { // Check if the target date is empty
         targetDateError();
+
+        // Create an image element
+        var img = document.createElement('img');
+        img.src = 'http://127.0.0.1:5500/MH%20Tx%20Plan%20Example_files/xgr.gif'; // Specify the path to your image
+        img.alt = 'Error Image'; // Add alternative text for accessibility
+        img.classList.add('popup-image'); // Add a class for styling
+
+        // Append the image element to the popup container
+        popupContainer.appendChild(img);
+
+        // Ensure the image is visible
+        img.style.display = 'inline !important'; // Display as a block element
+        img.style.width = '5px !important'; // Adjust width as needed
+        img.style.height = '5px !important'; // Adjust height as needed
     } else {
-        inputField.style.color = ""; // Reset text color if empty
-        fieldPopup.classList.toggle("hide");
+        // If the target date is not empty, reset any error state
+        var targetDatePopUp = document.getElementById("targetDatePopUp");
+        targetDatePopUp.classList.remove("show");
+        
+        // Remove any previously added image
+        var existingImg = popupContainer.querySelector('img.popup-image');
+        if (existingImg) {
+            existingImg.remove();
+        }
+    }
+}
+
+
+var targetDateContent = document.getElementById("targetDateContent");
+var popupContainer = document.getElementById("popup-container");
+console.log(targetDateContent.textContent.trim())
+
+if (targetDateContent.textContent.trim() === "") { // Check if the target date is empty
+    targetDateError();
+    // Create an image element
+    var img = document.createElement('img');
+    img.src = 'http://127.0.0.1:5500/MH%20Tx%20Plan%20Example_files/xgr.gif'; // Specify the path to your image
+    img.alt = 'Error Image'; // Add alternative text for accessibility
+    img.classList.add('popup-image'); // Add a class for styling
+
+    // Append the image element to the popup container
+    popupContainer.appendChild(img);
+
+    // Ensure the image is visible
+    img.style.display = 'block !important'; // Display as a block element
+    img.style.width = '5px !important'; // Adjust width as needed
+    img.style.height = '5px !important'; // Adjust height as needed
+} else {
+    // If the target date is not empty, reset any error state
+    var targetDatePopUp = document.getElementById("targetDatePopUp");
+    targetDatePopUp.classList.remove("show");
+    
+    // Remove any previously added image
+    var existingImg = popupContainer.querySelector('img.popup-image');
+    if (existingImg) {
+        existingImg.remove();
     }
 }
 // Questions:
