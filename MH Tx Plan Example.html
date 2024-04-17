@@ -586,14 +586,17 @@
                                                                                 <td></td>
                                                                                 <td style="background-color:#FFCCCC"> <b>Problem(Barr/Strengths):</b> Seeking counseling services due to symptoms of: anxiety
                                                                                     <img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"><br> 
-                                                                                    <b>Start Date:</b>3/12/2024<img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"> 
-                                                                                    <div class="popup" id="popupontainer" onmouseenter="targetDateError()" onmouseleave="targetDateError()" onchange="checkTargetDateInput()">
-                                                                                        <b id="targetDate">Target Date:</b-c>
-                                                                                            <span id="targetDateContent"></span>
-                                                                                            
-                                                                                            <img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"><div id="popup-container"></div>
+                                                                                    <b>Start Date:</b>3/12/2024<img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5">
+                                                                                    
+                                                                                    <div class="popup" id="popupcontainer" onmouseenter="showTargetDateError(true)" onmouseleave="showTargetDateError(false)" onchange="checkTargetDateInput()">
+                                                                                        <b>Target Date:</b>
+                                                                                        <span id="targetDateContent"></span> <!--this is where the date goes-->
+                                                                                        <img id="errorImage" src="http://127.0.0.1:5500/MH%20Tx%20Plan%20Example_files/xgr.gif" alt="Error Image" class="popup-image">
                                                                                         <span class="popuptext" id="targetDatePopUp">Field cannot be empty</span>
-                                                                                    </div>                                                                                    
+                                                                                        <div id="popup-container"></div>                                                                                   
+                                                                                    </div>
+                                                                                    
+                                                                                    <img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5">
                                                                                     <b>End Date:</b> </td>
                                                                             </tr>
 

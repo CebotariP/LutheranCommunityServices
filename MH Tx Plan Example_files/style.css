@@ -59,10 +59,12 @@
 }
 
 .popup-image {
-    /* Add your styles for the image */
+    display: inline;
+    vertical-align: middle; /* Adjust vertical alignment as needed */
 }
 
 #popup-container {
     position: relative; /* Ensure proper positioning */
     /* Add any other styles you need */
 }
+

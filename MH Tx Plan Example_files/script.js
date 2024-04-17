@@ -135,75 +135,49 @@ if (originalDate === checkDate) {
 
 //--------------- missing target date ------------------// 
 
-var targetDatePopUp = document.getElementById("targetDatePopUp");
-
-function targetDateError(){
-    targetDatePopUp.classList.toggle("show");
+function showTargetDateError(show) {
+    var targetDatePopUp = document.getElementById("targetDatePopUp");
+    if (show) {
+        targetDatePopUp.classList.add("show");
+    } else {
+        targetDatePopUp.classList.remove("show");
+    }
 }
 
 function checkTargetDateInput() {
     var targetDateContent = document.getElementById("targetDateContent");
-    var popupContainer = document.getElementById("popup-container");
-
+    var errorImage = document.getElementById("errorImage"); // Get reference to the image element
+    
     if (targetDateContent.textContent.trim() === "") { // Check if the target date is empty
-        targetDateError();
-
-        // Create an image element
-        var img = document.createElement('img');
-        img.src = 'http://127.0.0.1:5500/MH%20Tx%20Plan%20Example_files/xgr.gif'; // Specify the path to your image
-        img.alt = 'Error Image'; // Add alternative text for accessibility
-        img.classList.add('popup-image'); // Add a class for styling
-
-        // Append the image element to the popup container
-        popupContainer.appendChild(img);
-
-        // Ensure the image is visible
-        img.style.display = 'inline !important'; // Display as a block element
-        img.style.width = '5px !important'; // Adjust width as needed
-        img.style.height = '5px !important'; // Adjust height as needed
+        // Show the image if the target date is empty
+        errorImage.style.width = '11px'; // Adjust width as needed
+        errorImage.style.height = '9px'; // Adjust height as needed
+        errorImage.style.display = 'inline'; // Display the image
     } else {
-        // If the target date is not empty, reset any error state
-        var targetDatePopUp = document.getElementById("targetDatePopUp");
-        targetDatePopUp.classList.remove("show");
-        
-        // Remove any previously added image
-        var existingImg = popupContainer.querySelector('img.popup-image');
-        if (existingImg) {
-            existingImg.remove();
-        }
+        // Hide the image if the target date is not empty
+        errorImage.style.display = 'none';
     }
 }
 
 
+
+// same function for testing outside of function
 var targetDateContent = document.getElementById("targetDateContent");
-var popupContainer = document.getElementById("popup-container");
-console.log(targetDateContent.textContent.trim())
+var errorImage = document.getElementById("errorImage"); // Get reference to the image element
 
 if (targetDateContent.textContent.trim() === "") { // Check if the target date is empty
-    targetDateError();
-    // Create an image element
-    var img = document.createElement('img');
-    img.src = 'http://127.0.0.1:5500/MH%20Tx%20Plan%20Example_files/xgr.gif'; // Specify the path to your image
-    img.alt = 'Error Image'; // Add alternative text for accessibility
-    img.classList.add('popup-image'); // Add a class for styling
-
-    // Append the image element to the popup container
-    popupContainer.appendChild(img);
-
-    // Ensure the image is visible
-    img.style.display = 'block !important'; // Display as a block element
-    img.style.width = '5px !important'; // Adjust width as needed
-    img.style.height = '5px !important'; // Adjust height as needed
+    // Show the image if the target date is empty
+    errorImage.style.width = '11px'; // Adjust width as needed
+    errorImage.style.height = '9px'; // Adjust height as needed
+    errorImage.style.display = 'inline'; // Display the image
 } else {
-    // If the target date is not empty, reset any error state
-    var targetDatePopUp = document.getElementById("targetDatePopUp");
-    targetDatePopUp.classList.remove("show");
-    
-    // Remove any previously added image
-    var existingImg = popupContainer.querySelector('img.popup-image');
-    if (existingImg) {
-        existingImg.remove();
-    }
+    // Hide the image if the target date is not empty
+    errorImage.style.display = 'none';
 }
+
+
 // Questions:
 // - is this user input or automatically filled in by the computer?
+// - for this to be more efficient, this needs to be equal to treatment plan target date? can the computer automatically fill it in or is the user doing this?
+// i'm also assuming this date would be a certain time after the start date?
+// whereever the date goes is kind of a guess on the html part - it depends on if its user input (in which case it will be difficult to test) or if it's computer auto math
