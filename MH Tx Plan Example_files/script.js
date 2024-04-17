@@ -181,3 +181,15 @@ if (targetDateContent.textContent.trim() === "") { // Check if the target date i
 // - for this to be more efficient, this needs to be equal to treatment plan target date? can the computer automatically fill it in or is the user doing this?
 // i'm also assuming this date would be a certain time after the start date?
 // whereever the date goes is kind of a guess on the html part - it depends on if its user input (in which case it will be difficult to test) or if it's computer auto math
+
+//--------------- missing target date ------------------// 
+
+
+
+
+
+// Questions
+// how many objectives are there usually, or is it a standard 2?
+// general question: for the errors, do you want an error when it's empty and not just wrong if applicable?
+// Assumptions
+// I'm assuming you want this for both the objectives?
