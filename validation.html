@@ -1,25 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" type="text/css" href="validation.css">
         <title>Validation for Health Record Systems: Lutheran Community Services NW</title>
     </head>
     <body>
-        <h1>Validation</h1>
+        
+        <h1>LCS NW Data Validation</h1>
         <!-- Upload File -->
         <p>Upload file here. Only upload '.htlm' files.</p>
         <form method="post" enctype="multipart/form-data">
             <input type="file" name="file" accept=".html">
         </form>
-        <p>Validate:</p>
+        <h2>Validate:</h2>
         <!-- Validate Buttons -->
             <!-- Validate Dates -->
-            <button>Validate Dates</button>
+            <button id="valiDate">Validate Dates</button>
             <br><br>
             <!-- Validate Treatment Plan -->
-            <button>Validate Treatment Plan</button>
+            <button id="valTreatPlan">Validate Treatment Plan</button>
             <br><br>
             <!-- Validate Progress Note -->
-            <button>Validate Progress Note</button>
+            <button id="valProgNot">Validate Progress Note</button>
+            <br><br>
+            <!-- Validate signatures -->
+            <button id="valSig">Validate Signatures</button>
+            <br><br>
+            <!-- Validate all of the above -->
+            <button id="valAll">Validate All</button>
+            
+            <script src="validation.js"></script>
     </body>
     <footer>
 
