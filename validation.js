@@ -1,0 +1,1 @@
+// next step: learn how to "scrub" the html file for the (non) data i'm looking for to validate it
