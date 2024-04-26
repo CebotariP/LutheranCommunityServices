@@ -50,7 +50,7 @@ if (durationMinutes == durationTime || (durationTime == 0 && (isNaN(revTimeIn.ge
 // Questions about Error 1:
 // are there going to be other types of forms where no edits will be currently made and errors need to be checked?
 // other possible solution: automatically calculating time duration
-
+//
 //--------------- checking input for supervising physician ------------------// 
 var fieldPopup = document.getElementById("fieldPopUp");
 
@@ -132,6 +132,7 @@ if (originalDate === checkDate) {
 // Questions:
 // - is this a user input or automatically filled in by the computer?
 // - are there times when this isn't 90 days from the date of service?
+// should be greater than 0, and can't be more than 90
 
 //--------------- missing target date ------------------// 
 
@@ -191,5 +192,13 @@ if (targetDateContent.textContent.trim() === "") { // Check if the target date i
 // Questions
 // how many objectives are there usually, or is it a standard 2?
 // general question: for the errors, do you want an error when it's empty and not just wrong if applicable?
+//  amount of objectives change - measurable goals
+// can be an overall reminder 
+// can be a short paragraph text
+// essential elements for description: can be selected and copied - cheat sheet 
+// sigantures - gaurdian if under 13 y/o
+// - how would we use the changes we have live? - maybe open up a new tab and validate it then? if it can rerender - new tab that takes the data and validates it - more as an auditing tool
+// if there's a way for me use this to validate other things - multiple buttons that would specify which data to validate triggered to the service - treatment plan, progress note, mental health treatment plan (can be expanded)
+// 
 // Assumptions
 // I'm assuming you want this for both the objectives?
