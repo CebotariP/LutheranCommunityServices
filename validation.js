@@ -1,6 +1,28 @@
 // next step: learn how to "scrub" the html file for the (non) data i'm looking for to validate it
 console.log("Hello world");
 
+function validateSupervisingPhysician(htmlContent) {
+    // Define regular expression to match the supervising physician field
+    var supervisingPhysicianRegex = /<td[^>]*><b>Supervising Physician:<\/b><\/td>\s*<td[^>]*>(?:<a[^>]*>)?([^<]*)/i;
+
+    // Execute the regular expression on the HTML content
+    var supervisingPhysicianMatch = supervisingPhysicianRegex.exec(htmlContent);
+
+    // Extract the supervising physician's name if a match is found
+    var supervisingPhysicianName = supervisingPhysicianMatch ? supervisingPhysicianMatch[1].trim() : '';
+
+    // Check if the supervising physician field is empty or contains any name
+    if (supervisingPhysicianName) {
+        // If the field has any name, log an error saying it should be empty
+        console.error("Supervising physician field should be empty.");
+        showMessage("Error for Client Service: Supervising physician field should be empty.", 'error');
+    } else {
+        // If the field is empty, log a message saying it's empty
+        console.log("Supervising physician field is empty.");
+        showMessage("Client Service: Supervising physician field is empty.", 'success');
+    }
+}
+
 // Define the validateTreatmentPlanDate function globally
 function validateTreatmentPlanDate(htmlContent) {
     // Define regular expressions to match treatment plan target date and date of visit
@@ -66,10 +88,7 @@ function validateTreatmentPlanDate(htmlContent) {
     }
 }
 
-
-
-// Now define the extractAndValidate function
-function extractAndValidate() {
+function validateDateOnly(){
     // Clear the message box
     var messageBox = document.getElementById('messageBox');
     messageBox.innerHTML = '';
@@ -152,8 +171,7 @@ function extractAndValidate() {
         } else {
             showMessage("Error for Client Service: Invalid Revised Time In, Revised Time Out, or Duration.", 'error');
         }
-
-       // Validate treatment plan date
+        // Validate treatment plan date
        var treatmentPlanValid = validateTreatmentPlanDate(htmlContent);
 
        if (treatmentPlanValid) {
@@ -163,6 +181,54 @@ function extractAndValidate() {
            // Treatment plan date is not valid
            console.error("Invalid treatment plan date.");
        }
+    };
+
+    reader.readAsText(file);
+}
+
+function validateSupervisingPhysicianOnly(){
+   // Clear the message box
+   var messageBox = document.getElementById('messageBox');
+   messageBox.innerHTML = '';
+   
+   // Get the uploaded file
+   var file = document.getElementById('fileInput').files[0];
+   if (!file) {
+       showMessage('Please select a file.', 'error');
+       return;
+   }
+
+   var reader = new FileReader();
+
+   reader.onload = function(e) {
+       var htmlContent = e.target.result;
+       validateSupervisingPhysician(htmlContent);
+   };
+
+   reader.readAsText(file);
+}
+// Now define the extractAndValidate function
+function extractAndValidate() {
+    // Clear the message box
+    var messageBox = document.getElementById('messageBox');
+    messageBox.innerHTML = '';
+    
+    // Get the uploaded file
+    var file = document.getElementById('fileInput').files[0];
+    if (!file) {
+        showMessage('Please select a file.', 'error');
+        return;
+    }
+
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+        var htmlContent = e.target.result;
+
+        validateDateOnly();
+
+        validateSupervisingPhysician(htmlContent);
+
     };
 
     reader.readAsText(file);
