@@ -16,15 +16,26 @@
     <form id="uploadForm" method="post" enctype="multipart/form-data">
         <input type="file" id="fileInput" name="file" accept=".html">
         <br><br>
+        <p>Validate based on Data Type</p>
         <button type="button" onclick="validateDateOnly()">Validate Dates</button>
         <br><br>
         <button type="button" onclick="validateSupervisingPhysicianOnly()">Validate Supervising Physician</button>
         <br><br>
-        <button type="button" onclick="">Validate Progress Note</button>
-        <br><br>
-        <button type="button" onclick="">Validate Signatures</button>
+        <button type="button" onclick="validateSignaturesOnly()">Validate Signatures</button>
         <br><br>
         <button type="button" onclick="extractAndValidate()">Validate All of the Above</button>
+        <br><br>
+        <p>Validate based on Section</p>
+        <button type="button" onclick="validateClientService()">Validate Client Service</button>
+        <br><br>
+        <button type="button" onclick="validateTreatmentPlan()">Validate Treatment Plan</button>
+        <br><br>
+        <button type="button" onclick="validateSignaturesOnly()">Validate Signatures</button>
+        <br><br>
+        <button type="button" onclick="extractAndValidate()">Validate All of the Above</button>
+        <br><br><br>
+        <button type="button" onclick="togglePDF()">Progress Note Suggestions</button>
+        <embed id="pdfEmbed" src="EBP Essential Elements.pdf" type="application/pdf" width="100%" height="600px" hidden />
 
     </form>
     <!-- Message div to display console logs and errors -->
@@ -46,4 +57,5 @@ TO DO
 - validating number of signatures
 - validating all of the above
 - adding cool styling 
+- validate by data type vs. section
 -->

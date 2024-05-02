@@ -181,6 +181,24 @@ function validateDateOnly(){
            // Treatment plan date is not valid
            console.error("Invalid treatment plan date.");
        }
+
+       // Define regular expressions to match the target date in the Treatment Plan HTML
+       var targetDateRegex = /<b>\s*Target Date:\s*<\/b>\s*((\d{1,2}\/\d{1,2}\/\d{4})|\s*)/i;
+
+       // Execute the regular expression on the HTML content
+       var targetDateMatch = targetDateRegex.exec(htmlContent);
+
+       // Extract the target date if a match is found
+       var targetDate = targetDateMatch ? targetDateMatch[1].trim() : '';
+
+       // Check if the target date is missing
+       if (!targetDate) {
+           console.error("Target date is missing.");
+           showMessage("Error for Treatment Plan: Target date is missing.", 'error');
+       } else {
+           console.log("Target date:", targetDate);
+           showMessage("Treatment Plan: Target date is present.", 'success');
+       }
     };
 
     reader.readAsText(file);
@@ -207,6 +225,194 @@ function validateSupervisingPhysicianOnly(){
 
    reader.readAsText(file);
 }
+
+function validateSignaturesOnly() {
+    // Clear the message box
+   var messageBox = document.getElementById('messageBox');
+   messageBox.innerHTML = '';
+   
+   // Get the uploaded file
+   var file = document.getElementById('fileInput').files[0];
+   if (!file) {
+       showMessage('Please select a file.', 'error');
+       return;
+   }
+
+   var reader = new FileReader();
+
+   reader.onload = function(e) {
+       var htmlContent = e.target.result;
+       validateSignatures(htmlContent);
+   };
+
+   reader.readAsText(file);
+}
+
+function validateSignatures(htmlContent) {
+    // Define regular expression to match signatures
+    var signatureRegex = /Employee Signature/g;
+
+    // Execute the regular expression on the HTML content
+    var signatureMatches = htmlContent.match(signatureRegex);
+
+    // Count the number of signature matches
+    var signatureCount = signatureMatches ? signatureMatches.length : 0;
+
+    // Log the number of signatures
+    console.log("Number of signatures:", signatureCount);
+
+    // Check if there's only one signature
+    if (signatureCount === 1) {
+        // If there's only one signature, log an error
+        console.error("There should be at least two signatures.");
+        showMessage("Error for Signatures: There should be at least two signatures: employee and client. Ensure client is above 13 years of age - if not, include parent/gaurdian signature.", 'error');
+        return false;
+    } else {
+        // If there are more than one signatures or no signatures, log a success message
+        console.log("Number of signatures is valid.");
+        showMessage("For Signatures: Ensure client is above 13 years of age - if not, include parent/gaurdian signature.")
+        return true;
+    }
+}
+
+function validateClientService(){
+     // Clear the message box
+   var messageBox = document.getElementById('messageBox');
+   messageBox.innerHTML = '';
+   
+   // Get the uploaded file
+   var file = document.getElementById('fileInput').files[0];
+   if (!file) {
+       showMessage('Please select a file.', 'error');
+       return;
+   }
+
+   var reader = new FileReader();
+
+   reader.onload = function(e) {
+       var htmlContent = e.target.result;
+       // Define regular expressions to match the time in, time out, and duration values
+       var timeInRegex = /<td[^>]*>\s*<b>\s*Revised Time In:\s*<\/b>\s*<\/td>\s*<td[^>]*>\s*(\d{1,2}:\d{2}\s*[APap][Mm])\s*&nbsp;<\/td>/i;
+       var timeOutRegex = /<td[^>]*>\s*<b>\s*Revised Time Out:\s*<\/b>\s*<\/td>\s*<td[^>]*>\s*(\d{1,2}:\d{2}\s*[APap][Mm])\s*&nbsp;<\/td>/i;
+       var durationRegex = /<td[^>]*>\s*<b>\s*Duration:\s*<\/b>\s*<\/td>\s*<td[^>]*>\s*(\d+)\s*&nbsp;<\/td>/i;
+
+       // Execute the regular expressions on the HTML content
+       var timeInMatch = timeInRegex.exec(htmlContent);
+       var timeOutMatch = timeOutRegex.exec(htmlContent);
+       var durationMatch = durationRegex.exec(htmlContent);
+
+       // Log matched values for debugging
+       console.log("Matched Time In:", timeInMatch ? timeInMatch[1] : null);
+       console.log("Matched Time Out:", timeOutMatch ? timeOutMatch[1] : null);
+       console.log("Matched Duration:", durationMatch ? durationMatch[1] : null);
+
+       // Initialize time in, time out, and duration variables
+       var timeIn = null;
+       var timeOut = null;
+       var duration = null;
+
+       // Check if matches are found for time in, time out, and duration
+       if (timeInMatch) {
+           timeIn = timeInMatch[1].trim();
+           if (timeIn === '') {
+               timeIn = '0:00 AM'; // Set to 0 if time in is empty
+           }
+       }
+       if (timeOutMatch) {
+           timeOut = timeOutMatch[1].trim();
+           if (timeOut === '') {
+               timeOut = '0:00 AM'; // Set to 0 if time out is empty
+           }
+       }
+       if (durationMatch && durationMatch[1].trim() !== '') {
+           duration = parseInt(durationMatch[1].trim());
+       }
+
+       // Log processed values for debugging
+       console.log("Processed Time In:", timeIn);
+       console.log("Processed Time Out:", timeOut);
+       console.log("Processed Duration:", duration);
+
+       // Handle null values by setting them to 0
+       timeIn = timeIn || '0:00 AM';
+       timeOut = timeOut || '0:00 AM';
+       duration = duration || 0;
+
+       // Convert time in and time out to minutes
+       var timeInMinutes = convertToMinutes(timeIn);
+       var timeOutMinutes = convertToMinutes(timeOut);
+
+       // Validate duration based on time in and time out
+       if (timeIn !== null && timeOut !== null && duration !== null) {
+           // Calculate the duration based on time in and time out
+           var calculatedDuration = timeOutMinutes - timeInMinutes;
+           // Check if duration matches calculated duration
+           if (duration === calculatedDuration) {
+               // If duration matches calculated duration, log a success message
+               showMessage("Valid duration under Client Service.", 'success');
+           } else {
+               // If duration does not match calculated duration, log an error message
+               showMessage("Error for Client Service: Invalid Duration.", 'error');
+           }
+       } else {
+           showMessage("Error for Client Service: Invalid Revised Time In, Revised Time Out, or Duration.", 'error');
+       }
+       validateSupervisingPhysician(htmlContent);
+   };
+
+   reader.readAsText(file);
+}
+
+function validateTreatmentPlan() {
+      // Clear the message box
+   var messageBox = document.getElementById('messageBox');
+   messageBox.innerHTML = '';
+   
+   // Get the uploaded file
+   var file = document.getElementById('fileInput').files[0];
+   if (!file) {
+       showMessage('Please select a file.', 'error');
+       return;
+   }
+
+   var reader = new FileReader();
+
+   reader.onload = function(e) {
+       var htmlContent = e.target.result;
+      // Validate treatment plan date
+      var treatmentPlanValid = validateTreatmentPlanDate(htmlContent);
+
+      if (treatmentPlanValid) {
+          // Treatment plan date is valid
+          console.log("Valid treatment plan date.");
+      } else {
+          // Treatment plan date is not valid
+          console.error("Invalid treatment plan date.");
+      }
+      // Define regular expressions to match the target date in the Treatment Plan HTML
+      var targetDateRegex = /<b>\s*Target Date:\s*<\/b>\s*((\d{1,2}\/\d{1,2}\/\d{4})|\s*)/i;
+
+      // Execute the regular expression on the HTML content
+      var targetDateMatch = targetDateRegex.exec(htmlContent);
+
+      // Extract the target date if a match is found
+      var targetDate = targetDateMatch ? targetDateMatch[1].trim() : '';
+
+      // Check if the target date is missing
+      if (!targetDate) {
+          console.error("Target date is missing.");
+          showMessage("Error for LCSWA Treatment Plan: Target date is missing.", 'error');
+      } else {
+          console.log("Target date:", targetDate);
+          showMessage("Treatment Plan: Target date is present.", 'success');
+      }
+
+   };
+
+   reader.readAsText(file);
+
+}
+
 // Now define the extractAndValidate function
 function extractAndValidate() {
     // Clear the message box
@@ -228,6 +434,8 @@ function extractAndValidate() {
         validateDateOnly();
 
         validateSupervisingPhysician(htmlContent);
+
+        validateSignatures(htmlContent);
 
     };
 
@@ -273,16 +481,8 @@ function showMessage(message, type) {
     messageBox.appendChild(messageElement);
 }
 
+function togglePDF() {
+    var pdfEmbed = document.getElementById('pdfEmbed');
+    pdfEmbed.hidden = !pdfEmbed.hidden;
+}
 
-
-
-// <tr>
-//      <td>
-//          <table border="0" cellspacing="0" cellpadding="0">
-//              <tbody><tr><td>
-//                  <img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"><img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5">
-//      </td>
-//      <td style="vertical-align:top;"><b>Treatment Plan Target Date:</b>&nbsp;&nbsp;
-//          <span class="Answer">03/12/2024</span>&nbsp;</td></tr><tr><td><img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5">
-//          <img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"></td><td style="vertical-align:top;">
-//          <b><b>Provide short information or explanation here.  <i> Use another service type if you need to document an intervention </i></b>:</b>&nbsp;&nbsp;<span class="Answer"></span>&nbsp;</td></tr>
