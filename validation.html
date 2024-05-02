@@ -1,37 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="validation.css">
-        <title>Validation for Health Record Systems: Lutheran Community Services NW</title>
-    </head>
-    <body>
-        
-        <h1>LCS NW Data Validation</h1>
-        <!-- Upload File -->
-        <p>Upload file here. Only upload '.htlm' files.</p>
-        <form method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".html">
-        </form>
-        <h2>Validate:</h2>
-        <!-- Validate Buttons -->
-            <!-- Validate Dates -->
-            <button id="valiDate">Validate Dates</button>
-            <br><br>
-            <!-- Validate Treatment Plan -->
-            <button id="valTreatPlan">Validate Treatment Plan</button>
-            <br><br>
-            <!-- Validate Progress Note -->
-            <button id="valProgNot">Validate Progress Note</button>
-            <br><br>
-            <!-- Validate signatures -->
-            <button id="valSig">Validate Signatures</button>
-            <br><br>
-            <!-- Validate all of the above -->
-            <button id="valAll">Validate All</button>
-            
-            <script src="validation.js"></script>
-    </body>
-    <footer>
+<head>
+    <title>HTML Validation</title>
+    <link rel="stylesheet" type="text/css" href="validation.css">
+    <script src="validation.js"></script>
+</head>
+<body>
 
-    </footer>
+<header>
+    <h1>Lutheran Community Services Northwest Data Validation</h1>
+</header>
+
+<section class="upload-section">
+    <p>Upload file here. Only upload '.html' files.</p>
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="file" accept=".html">
+        <br><br>
+        <button type="button" onclick="extractAndValidate()">Validate Dates</button>
+    </form>
+    <!-- Message div to display console logs and errors -->
+    <div id="messageBox"></div>
+</section>
+
+<footer>
+    <!-- Footer content here -->
+</footer>
+
+</body>
 </html>
