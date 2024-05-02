@@ -1,9 +1,79 @@
 // next step: learn how to "scrub" the html file for the (non) data i'm looking for to validate it
 console.log("Hello world");
-// next step: learn how to "scrub" the html file for the (non) data i'm looking for to validate it
-console.log("Hello world");
 
+// Define the validateTreatmentPlanDate function globally
+function validateTreatmentPlanDate(htmlContent) {
+    // Define regular expressions to match treatment plan target date and date of visit
+    var targetDateRegex = /<td style="vertical-align:top;"><b>Treatment Plan Target Date:<\/b>&nbsp;&nbsp;<span class="Answer">(\d{1,2}\/\d{1,2}\/\d{4})<\/span>&nbsp;<\/td>/i;
+    var visitDateRegex = /\b(\d{1,2}\/\d{1,2}\/\d{2,4})\b/i;
+
+    // Execute the regular expressions on the HTML content
+    var targetDateMatch = targetDateRegex.exec(htmlContent);
+    var visitDateMatch = visitDateRegex.exec(htmlContent);
+
+    // Initialize variables for target date and visit date
+    var targetDate = null;
+    var visitDate = null;
+
+    // Extract visit date if match is found
+    if (visitDateMatch && visitDateMatch[1].trim() !== '') {
+        visitDate = new Date(visitDateMatch[1].trim());
+    }
+
+    // Extract target date if match is found
+    if (targetDateMatch && targetDateMatch[1].trim() !== '') {
+        targetDate = new Date(targetDateMatch[1].trim());
+    }
+
+    // Log extracted dates to console
+    console.log("Visit Date:", visitDate);
+    console.log("Target Date:", targetDate);
+
+    // Check if both target date and visit date are valid
+    if (targetDate !== null && visitDate !== null) {
+        // If visit date and target date are the same, log an error and return false
+        if (visitDate.getTime() === targetDate.getTime()) {
+            console.error("Visit date and treatment plan date cannot be the same.");
+            showMessage("Error for LCSWA Treatment Plan: Visit date and treatment plan date cannot be the same.", 'error');
+            return false;
+        }
+
+        // Calculate the difference in days between target date and visit date
+        var differenceInDays = Math.abs((targetDate.getTime() - visitDate.getTime()) / (1000 * 60 * 60 * 24));
+
+        console.log("Difference in days:", differenceInDays);
+
+        // If the treatment date is within the 30-day range of the 90-day mark of the visit date, log a success message
+        if (differenceInDays >= 60 && differenceInDays <= 120) {
+            if (differenceInDays >= 90 - 30 && differenceInDays <= 90 + 30) {
+                console.log("Valid treatment plan date.");
+                showMessage("LCSWA Treatment Plan: Valid Treatment Plan Target Date.", 'success');
+                return true;
+            } else {
+                // If the treatment date is outside the 30-day range of the 90-day mark of the visit date, log a warning
+                console.warn("It is recommended that the treatment date is 90 days from the visit date.");
+                showMessage("Warning for LCSWA Treatment Plan: Target date is typically 90 days from the Visit Date.", 'warning');
+                return true;
+            }
+        } else {
+            // If the difference is not within the range of 60 to 120 days, log an error
+            console.warn("Target date is not within the range of 60 to 120 days from the visit date.");
+            showMessage("Warning for LCSWA Treatment Plan: Target date is typically 90 days from the Visit Date.", 'warning');
+            return false;
+        }
+    } else {
+        return false; // Invalid HTML content: Target date or visit date not found
+    }
+}
+
+
+
+// Now define the extractAndValidate function
 function extractAndValidate() {
+    // Clear the message box
+    var messageBox = document.getElementById('messageBox');
+    messageBox.innerHTML = '';
+    
     // Get the uploaded file
     var file = document.getElementById('fileInput').files[0];
     if (!file) {
@@ -74,14 +144,25 @@ function extractAndValidate() {
             // Check if duration matches calculated duration
             if (duration === calculatedDuration) {
                 // If duration matches calculated duration, log a success message
-                showMessage("Valid duration.", 'success');
+                showMessage("Valid duration under Client Service.", 'success');
             } else {
                 // If duration does not match calculated duration, log an error message
-                showMessage("Invalid duration.", 'error');
+                showMessage("Error for Client Service: Invalid Duration.", 'error');
             }
         } else {
-            showMessage("Invalid HTML content: Time In, Time Out, or Duration not found.", 'error');
+            showMessage("Error for Client Service: Invalid Revised Time In, Revised Time Out, or Duration.", 'error');
         }
+
+       // Validate treatment plan date
+       var treatmentPlanValid = validateTreatmentPlanDate(htmlContent);
+
+       if (treatmentPlanValid) {
+           // Treatment plan date is valid
+           console.log("Valid treatment plan date.");
+       } else {
+           // Treatment plan date is not valid
+           console.error("Invalid treatment plan date.");
+       }
     };
 
     reader.readAsText(file);
@@ -114,10 +195,28 @@ function convertToMinutes(timeString) {
 // Function to display message on webpage
 function showMessage(message, type) {
     var messageBox = document.getElementById('messageBox');
-    messageBox.innerHTML = message;
+    var messageElement = document.createElement('div');
+    messageElement.textContent = message;
     if (type === 'error') {
-        messageBox.style.color = 'red';
+        messageElement.style.color = 'red';
     } else if (type === 'success') {
-        messageBox.style.color = 'green';
+        messageElement.style.color = 'green';
+    } else if (type === 'warning') {
+        messageElement.style.color = 'orange';
     }
+    messageBox.appendChild(messageElement);
 }
+
+
+
+
+// <tr>
+//      <td>
+//          <table border="0" cellspacing="0" cellpadding="0">
+//              <tbody><tr><td>
+//                  <img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"><img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5">
+//      </td>
+//      <td style="vertical-align:top;"><b>Treatment Plan Target Date:</b>&nbsp;&nbsp;
+//          <span class="Answer">03/12/2024</span>&nbsp;</td></tr><tr><td><img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5">
+//          <img src="./MH Tx Plan Example_files/spacer.gif" width="10" height="5"></td><td style="vertical-align:top;">
+//          <b><b>Provide short information or explanation here.  <i> Use another service type if you need to document an intervention </i></b>:</b>&nbsp;&nbsp;<span class="Answer"></span>&nbsp;</td></tr>
