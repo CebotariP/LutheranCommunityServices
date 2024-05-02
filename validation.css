@@ -30,16 +30,17 @@ header {
 }
 
 .upload-section button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    padding: 12px 24px;
+    background-color: #4CAF50;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .upload-section button:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
 }
 
 footer {
@@ -54,4 +55,39 @@ footer {
 
 #uploadForm {
     padding-bottom: 10px;
+}
+#messageBox {
+    background-color: #f8f9fa;
+    border: 2px solid #ced4da;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Error message styling */
+.error-message {
+    color: #dc3545;
+    font-weight: bold;
+    margin-bottom: 10px; /* Add space between error messages */
+}
+
+
+/* Warning styling */AA
+#messageBox .warning {
+    color: #ffc107;
+    font-weight: bold;
+    margin-bottom: 10px; /* Add space between warning messages */
+}
+
+/* Success styling */
+#messageBox .success {
+    color: #28a745;
+    font-weight: bold;
+    margin-bottom: 10px; /* Add space between success messages */
 }

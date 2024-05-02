@@ -471,6 +471,10 @@ function showMessage(message, type) {
     var messageBox = document.getElementById('messageBox');
     var messageElement = document.createElement('div');
     messageElement.textContent = message;
+
+    // Add error-message class for styling and space between messages
+    messageElement.classList.add('error-message');
+
     if (type === 'error') {
         messageElement.style.color = 'red';
     } else if (type === 'success') {
@@ -478,8 +482,10 @@ function showMessage(message, type) {
     } else if (type === 'warning') {
         messageElement.style.color = 'orange';
     }
+
     messageBox.appendChild(messageElement);
 }
+
 
 function togglePDF() {
     var pdfEmbed = document.getElementById('pdfEmbed');
